@@ -144,7 +144,7 @@ public class SeedData {
     private record Simulation(List<Tribute> tributes, Map<Long, List<TributeEvent>> events) {
     }
 
-    private List<Tribute> buildTributes(long editionId, Random rnd, Set<Integer> emptyDistricts) {
+    public List<Tribute> buildTributes(long editionId, Random rnd, Set<Integer> emptyDistricts) {
         List<String> names = new ArrayList<>(NAMES);
         Collections.shuffle(names, rnd);
         List<Tribute> tributes = new ArrayList<>();
@@ -173,16 +173,14 @@ public class SeedData {
         for (Tribute t : tributes) {
             int count = 1 + rnd.nextInt(3);
             for (int i = 0; i < count; i++) {
-                events.get(t.id()).add(new TributeEvent(randomTime(rnd, from, window), EventType.FOOD, EventLevel.INFO,
-                        "A trouvé de la nourriture : " + FOODS.get(rnd.nextInt(FOODS.size()))));
+                events.get(t.id()).add(foodEvent(rnd, randomTime(rnd, from, window)));
             }
         }
 
         // Aide du Capitole : 5 parachutes (INFO)
         for (int i = 0; i < 5; i++) {
             Tribute t = tributes.get(rnd.nextInt(tributes.size()));
-            events.get(t.id()).add(new TributeEvent(randomTime(rnd, from, window), EventType.SPONSOR_GIFT, EventLevel.INFO,
-                    "Parachute du Capitole : " + GIFTS.get(rnd.nextInt(GIFTS.size()))));
+            events.get(t.id()).add(giftEvent(rnd, randomTime(rnd, from, window)));
         }
 
         // Éliminations : le tueur reçoit un événement WARN, la victime passe à ELIMINATED
@@ -199,8 +197,7 @@ public class SeedData {
             Tribute killer = tributes.get(killerIdx);
             tributes.set(victimIdx, victim.withState(TributeState.ELIMINATED));
             eliminatedAt.put(victim.id(), when);
-            events.get(killer.id()).add(new TributeEvent(when, EventType.KILL, EventLevel.WARN,
-                    "A éliminé " + victim.name() + " (district " + victim.district() + ")"));
+            events.get(killer.id()).add(killEvent(victim, when));
         }
 
         // Cohérence : un tribut éliminé n'a plus d'événement après son élimination
@@ -215,6 +212,21 @@ public class SeedData {
         });
 
         return new Simulation(tributes, events);
+    }
+
+    public TributeEvent foodEvent(Random rnd, Instant when) {
+        return new TributeEvent(when, EventType.FOOD, EventLevel.INFO,
+                "A trouvé de la nourriture : " + FOODS.get(rnd.nextInt(FOODS.size())));
+    }
+
+    public TributeEvent giftEvent(Random rnd, Instant when) {
+        return new TributeEvent(when, EventType.SPONSOR_GIFT, EventLevel.INFO,
+                "Parachute du Capitole : " + GIFTS.get(rnd.nextInt(GIFTS.size())));
+    }
+
+    public TributeEvent killEvent(Tribute victim, Instant when) {
+        return new TributeEvent(when, EventType.KILL, EventLevel.WARN,
+                "A éliminé " + victim.name() + " (district " + victim.district() + ")");
     }
 
     private Instant randomTime(Random rnd, Instant from, long windowSeconds) {

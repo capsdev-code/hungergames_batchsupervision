@@ -9,10 +9,10 @@ Le backend est fourni et ajouté par incréments avant chaque session qui en dé
 | 2 | S3 | Service + `HttpClient` branché sur `/api/editions`, états chargement/erreur | |
 | 2 | S4 | Routing : liste, détail d'une édition (phases, erreurs, 12 districts), fil d'événements d'un tribut | |
 | 3 | S5 | Liste des tributs, filtres état / district / niveau (`computed`) | |
-| 3 | S6 | Relance d'une édition échouée : Reactive Forms, validation, erreurs renvoyées par l'API | `POST /api/editions/{id}/relaunch` |
+| 3 | S6 | Relance d'une édition échouée (Reactive Forms, erreurs API) et panneau de simulation « Lancer une édition » avec choix du scénario | `POST /api/editions` et `/relaunch` (fait) |
 | 4 | S7 | Auth : login, JWT, interceptor, guard | Spring Security + JWT |
 | 4 | S8 | Rôles lecteur / opérateur, masquage des actions | Rôles sur les endpoints |
 | 5 | S9 | Pagination et tri côté serveur, types TS générés depuis OpenAPI | Endpoints paginés |
-| 5 | S10 | Rafraîchissement auto de l'édition en cours (RxJS : `timer`, `switchMap`, `catchError`) | Édition 75 qui progresse |
+| 5 | S10 | Rafraîchissement auto de l'édition en cours (RxJS : `timer`, `switchMap`, `catchError`) | Édition simulée qui progresse en direct (fait) |
 | 6 | S11 | Tests (composant, service, 1 test Playwright), lazy loading | |
 | 6 | S12 | Build, déploiement, README, démo à l'équipe | |

@@ -13,6 +13,10 @@
 7. Accès réservé aux Gamemakers authentifiés, deux rôles : lecteur et opérateur.
 8. Rafraîchissement automatique de l'édition en cours.
 
+## Hors besoin client : outil de démo
+
+Le lancement d'une édition depuis la console n'est pas demandé par le Capitole (le vrai batch est lancé ailleurs). Il est ajouté au projet pour tester l'IHM : voir une édition progresser, échouer fonctionnellement ou techniquement, puis la relancer. À réserver à l'environnement de développement.
+
 ## Règle fonctionnelle
 
 Chaque édition exige 12 districts x 2 tributs = 24 tributs. La Moisson valide cette règle. Un district avec moins de 2 tributs provoque une erreur **fonctionnelle** et l'édition passe en échec dès la Moisson.

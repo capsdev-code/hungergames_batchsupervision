@@ -20,6 +20,7 @@ Monorepo : `backend/` (Spring Boot 3, Java 21, généré par Claude) et `fronten
 
 ## Commandes
 
+- Simuler un batch (démo) : `curl -X POST localhost:8080/api/editions -H 'Content-Type: application/json' -d '{"scenario":"TECHNICAL_FAILURE"}'`
 - Backend : `cd backend && mvn spring-boot:run` (port 8080), tests : `mvn test`
 - OpenAPI : http://localhost:8080/v3/api-docs, Swagger UI : http://localhost:8080/swagger-ui.html
 - Frontend : `cd frontend && ng serve` (port 4200)

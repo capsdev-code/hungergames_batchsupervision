@@ -46,6 +46,26 @@ Le niveau `ERROR` est réservé aux erreurs d'édition.
 | GET | `/api/editions/{id}/tributes` | `Tribute[]` |
 | GET | `/api/editions/{id}/tributes/{tributeId}/events` | `TributeEvent[]` |
 
+## Endpoints d'écriture (outil de démo)
+
+Le vrai batch est lancé hors de la console. Ces endpoints simulent un batch pour tester l'IHM (progression, échecs fonctionnels et techniques).
+
+| Méthode | URL | Effet |
+|---|---|---|
+| POST | `/api/editions` | Lance une nouvelle édition. Réponse 201 + `EditionSummary` (statut `STARTED`) |
+| POST | `/api/editions/{id}/relaunch` | Relance une édition `FAILED`. 409 si elle n'est pas en échec |
+
+Corps optionnel (les deux endpoints) : `{"scenario": "NORMAL" | "MISSING_DISTRICT" | "TECHNICAL_FAILURE", "missingDistrict": 1..12}`.
+Sans corps : scénario `NORMAL`. `missingDistrict` vaut 2 par défaut.
+
+| Scénario | Résultat |
+|---|---|
+| `NORMAL` | Moisson, Arène, Couronnement, statut `COMPLETED`, 1 survivant |
+| `MISSING_DISTRICT` | Échec **fonctionnel** à la Moisson : le district choisi n'a aucun tribut |
+| `TECHNICAL_FAILURE` | Échec **technique** en Arène après 8 éliminations (timeout base de données) |
+
+Règles : une seule édition simulée à la fois (409 sinon). L'édition progresse en direct : environ 1 seconde par élimination, une édition normale dure environ 30 secondes (réglable avec `app.batch.tick-ms`). Les éditions simulées sont perdues au redémarrage du backend.
+
 ## Jeux de données
 
 | Édition | Cas |
