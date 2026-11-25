@@ -1,1 +1,26 @@
-<p>edition-card works!</p>
+<article class="card">
+  <header class="card-header">
+    <h2>{{ edition().label }}</h2>
+    <!-- class="status" est fixe, [class]="..." ajoute la classe calculée (status-completed, ...) -->
+    <span class="status" [class]="statusClass()">{{ statusLabel() }}</span>
+  </header>
+
+  <p>Début : {{ edition().startTime | date: 'dd/MM/yyyy HH:mm' }}</p>
+
+  <!-- @if teste si endTime existe (non null). @else prend le relais sinon. -->
+  @if (edition().endTime) {
+    <p>Fin : {{ edition().endTime | date: 'dd/MM/yyyy HH:mm' }}</p>
+  } @else {
+    <p>Fin : En cours</p>
+  }
+
+  <ul class="counts">
+    <li>{{ edition().tributeCount }} tributs</li>
+    <li>{{ edition().aliveCount }} vivants</li>
+    <li>{{ edition().eliminatedCount }} éliminés</li>
+  </ul>
+
+  @if (edition().errorCount > 0) {
+    <p class="errors">{{ edition().errorCount }} erreur(s)</p>
+  }
+</article>

@@ -1,0 +1,49 @@
+.card {
+  border: 1px solid #d0d4dc;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+h2 {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.status {
+  padding: 2px 10px;
+  border-radius: 99px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.status-completed {
+  background: #1b7f55;
+}
+
+.status-started {
+  background: #b45f06;
+}
+
+.status-failed {
+  background: #b42318;
+}
+
+.counts {
+  display: flex;
+  gap: 16px;
+  padding: 0;
+  list-style: none;
+}
+
+.errors {
+  color: #b42318;
+  font-weight: 600;
+}
